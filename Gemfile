@@ -38,7 +38,7 @@ gem "paperclip", "~> 4.2"
 gem 'medium-editor-rails', '~> 2.0.9'
 gem "font-awesome-rails"
 gem "skylight"
-gem 'rmagick', '~> 2.13.3'
+gem 'rmagick', '~> 2.13.4'
 gem 'pjax_rails'
 gem 'flat-ui-rails'
 gem 'simple_captcha2', require: 'simple_captcha'
