@@ -181,9 +181,62 @@
 
         <% if current_user.username == @user.username %>
             <div class="tab-pane active" id="subs">
-              <% @user.subscription_posts.each do |subscription_post| %>
-                <%= link_to subscription_post.title, post_path(subscription_post) %>
-              <% end %>
+              <div class="group-container-none">
+                <ul class="grouped-list-none">
+                  <% @user.subscription_posts.each do |subscription_post| %>
+                    <li class="menu-item list-group-item">
+                      <% if subscription_post.main_picture %>
+                        <div class="pic">
+                          <a href="<%= post_path(id: subscription_post.slug) %>">
+                            <img src="<%= subscription_post.main_picture.image.url %>" alt="Placeholder" width="260" height="150" />
+                          </a>
+                        </div> <!-- .pic -->
+                      <% end %>
+
+                      <h4 class="list-group-item-heading">
+                        <small>
+                          <span class="next-av">
+                          <img class="img-circle" width="60" height="60" src="<%= subscription_post.user.avatar.url(:thumb) rescue  asset_path('missing-avatar.png') %>">
+                        </span>
+                          Added by: <a href="<%= user_path(subscription_post.user) rescue "" %>" title="User"><%= subscription_post.user.username rescue "Vigap" %></a></small>
+                        <a href="<%= post_path(id: subscription_post.slug) %>" title="<%= subscription_post.title %>"><%= subscription_post.title %></a>
+                      </h4>
+
+                      <p>
+                        <%= truncate(strip_tags(subscription_post.body.html_safe), :length => 100, :omission => '... (continued)', :escape => false) %>
+                      </p>
+
+                      <div class="card-footer">
+                        <!--Types of label: Default Primary Success Info Warning Danger-->
+                        <% if subscription_post.updated_at > Time.now - 1.days %>
+                                  <span class="post-stats icon icon-clock-o warn">
+                        <% else %>
+                                  <span class="post-stats icon icon-clock-o">
+                        <% end %>
+                        <span><%=time_ago_in_words(subscription_post.updated_at)%></span></span>
+
+                        <% if subscription_post.cached_votes_up > 0 %>
+                                  <span class="post-stats icon icon-thumbs-up">
+                                    <span><%= subscription_post.cached_votes_up %></span>
+                                  </span>
+                        <% end %>
+
+                        <% if subscription_post.cached_votes_down > 0 %>
+                                  <span class="post-stats icon icon-thumbs-down">
+                                    <span><%=subscription_post.cached_votes_down%></span>
+                                  </span>
+                        <% end %>
+
+                        <% if subscription_post.comments %>
+                                <span class="post-stats icon icon-comment">
+                                  <span><%=subscription_post.comments.length %></span>
+                                </span>
+                        <% end %>
+                      </div>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
             </div><!--/tab-pane-->
 
             <div class="tab-pane" id="settings">

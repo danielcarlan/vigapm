@@ -11,11 +11,43 @@
 @import 'home_cards';
 @import 'notifications';
 
+html {
+  position: relative;
+  height: 100%;
+}
+
 body {
   font-family: "proxima-nova", sans-serif;
   background: #f9f9f9;
+  height: 100%;
 }
 
+#wrap {
+  min-height: 100%;
+}
+
+#main {
+  overflow: auto;
+  padding-bottom: 45px;
+}
+
+footer {
+  width: 100%;
+  background: #333;
+  margin-top: -45px;
+  height: 45px;
+  clear: both;
+  padding: 15px 0;
+  font-size: 13px;
+  font-weight: normal;
+  a {
+    margin: 0 8px;
+  }
+  .f-right {
+    margin-right: 8px;
+    font-size: 13px;
+  }
+}
 @media only screen and (min-width: 768px) {
 //	.navbar, .navbar-default .navbar-nav > li > a {
 //		height: 42px;
@@ -419,20 +451,6 @@ header .brand img:first-child {
 }
 */
 
-footer {
-  background: #333;
-  margin-top: 20px;
-  padding: 15px 0;
-  font-size: 13px;
-  font-weight: normal;
-  a {
-    margin: 0 8px;
-  }
-  .f-right {
-    margin-right: 8px;
-    font-size: 13px;
-  }
-}
 .followers {
   padding: 0;
   margin: 0;

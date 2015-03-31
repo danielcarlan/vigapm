@@ -6,7 +6,4 @@ $(document).ready(function() {
         offset: 27,
         verticalOffset: 27
     });
-
-  if ($(document).height() <= $(window).height())
-    $("footer").addClass("navbar-fixed-bottom");
 });
