@@ -24,8 +24,9 @@
 
       <!-- user face -->
       <% if current_user %>
-          <a href="<%=user_path(current_user)%>" class="no-style" id="_home_profile">
-            <span class="user-avatar"><%= image_tag current_user.avatar.url, width: 30, height: 30 %></span>
+        <%= render 'shared/notifications_dropdown' %>
+
+        <a href="<%=user_path(current_user)%>" class="no-style" id="_home_profile">
             <strong><%= current_user.username %></strong>
             <span class="inliner icon icon-angle-right"></span>
           </a>

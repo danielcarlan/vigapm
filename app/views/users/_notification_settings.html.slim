@@ -1,0 +1,23 @@
+= form_for @user do |f|
+  .form-group
+    .col-xs-6
+      = f.label :notify_post_commented
+        | Send me an email when a new comment is added on my posts.
+      = f.check_box :notify_post_commented, class: 'form-control'
+
+  .form-group
+    .col-xs-6
+      = f.label :notify_post_edited
+        | Send me an email when a post I follow is updated.
+      = f.check_box :notify_post_edited, class: 'form-control'
+
+  .form-group
+    .col-xs-6
+      = f.label :notify_becoming_guru
+        | Send me an email when I become a Guru on a post.
+      = f.check_box :notify_becoming_guru, class: 'form-control'
+
+  .form-group
+    .col-xs-12
+      br
+      = f.submit 'Save', class: 'btn btn-info', id: '_profile_notification_settings_save'

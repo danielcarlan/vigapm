@@ -9,6 +9,7 @@
 @import 'flat-ui';
 @import 'icons';
 @import 'home_cards';
+@import 'notifications';
 
 body {
   font-family: "proxima-nova", sans-serif;
@@ -96,7 +97,7 @@ body {
   top: 8px;
   right: 15px;
 
-  a {
+  > a {
     display: inline-block;
     padding: 8px 14px;
     margin-left: 10px;

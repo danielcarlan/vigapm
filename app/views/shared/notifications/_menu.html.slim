@@ -1,0 +1,17 @@
+#notifications-menu.dropdown-menu role='menu' aria-labelledby='notifications-dropdown-link'
+  .notifications-title Notifications
+  ul.notifications-dropdown
+    - if current_user.unread_users_notifications.any?
+      - current_user.unread_users_notifications.limit(20).each do |notification|
+        li.notification[id=notification.id]
+          = link_to user_path(notification.sender), class: 'notification-avatar'
+            = image_tag notification.sender.avatar.url, class: 'img-circle'
+          div.notification-message[data-notification-post-id=notification.post.slug]
+            = raw(notification.message)
+            br
+            small #{time_ago_in_words(notification.created_at)} ago
+          .hover-btn
+            = link_to mark_users_notification_path(notification), class: 'mark-notification', remote: true, method: :put
+              span.glyphicon.glyphicon-remove aria-hidden="true"
+    - else
+      li.empty-notifications[role='presentation'] No notifications so far!

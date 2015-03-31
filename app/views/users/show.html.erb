@@ -53,7 +53,8 @@
         <% if current_user.username == @user.username %>
           <li><a href="#subs" data-toggle="tab">Followed posts</a></li>
           <li><a href="#settings" data-toggle="tab" id="_profile_settings">Settings</a></li>
-        <% end %>
+          <li><a href="#notification-settings" data-toggle="tab" id="_profile_notifications">Notifications</a></li>
+      <% end %>
       </ul>
 
       <div class="tab-content">
@@ -238,6 +239,9 @@
                     </div>
                   </div>
               <% end %>
+            </div>
+            <div class="tab-pane" id="notification-settings">
+              <%= render 'notification_settings' %>
             </div>
         <% end %>
 

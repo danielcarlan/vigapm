@@ -1,0 +1,5 @@
+$('#notifications .notifications-menu').html(
+  "<%= j(render 'shared/notifications/menu') %>"
+);
+
+$('#notifications-badge').html("<%= @users_notifications.count %>");

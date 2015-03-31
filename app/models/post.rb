@@ -38,6 +38,7 @@ class Post < ActiveRecord::Base
   has_many :users, through: :subscriptions, dependent: :destroy
 
   before_validation :generate_slug
+  after_commit :notify_post_edited!, on: :update
 
   validates :slug, presence: true
   validates :title, presence: true, uniqueness: true
@@ -57,6 +58,7 @@ class Post < ActiveRecord::Base
   def change_guru!
     if seeking_new_guru? && guru_should_leave?
       self.update!(guru: guru_candidate)
+      Notifications::Event.notify_becoming_guru!(self)
     end
   end
 
@@ -149,5 +151,9 @@ class Post < ActiveRecord::Base
 
   def generate_slug
     self.slug = title.parameterize
+  end
+
+  def notify_post_edited!
+    Notifications::Event.notify_post_edited!(self)
   end
 end

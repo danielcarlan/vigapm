@@ -1,0 +1,7 @@
+h1 #{@event.user.username} wrote a new comment on #{@event.post.title}
+
+= link_to 'Click here to read and reply to this comment!', post_url(@event.post)
+hr
+| Sincerely,
+br
+|The Vigap Team

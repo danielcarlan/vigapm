@@ -25,6 +25,7 @@
 //= require jquery.fileupload
 //= require medium-editor-insert-plugin.min
 
+//= require js-routes
 //= require_tree .
 
 //$(function() {

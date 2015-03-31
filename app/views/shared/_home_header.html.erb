@@ -3,16 +3,15 @@
 
   <div class="user-area">
 
-      <!-- user face -->
-        <% if current_user %>
-              <a href="<%=user_path(current_user)%>" class="no-style" id="_home_profile">
-                <span class="user-avatar"><%= image_tag current_user.avatar.url, style: "width: 30px" %></span>
-                <strong><%= current_user.username %></strong>
-                <span class="inliner icon icon-angle-right"></span>
-              </a>
-        <% else %>
-              <%= link_to t('user.user_login'), new_session_path, title: t('user.user_login'), id: '_home_singin' %>
-        <% end %>
+    <% if current_user %>
+      <%= render 'shared/notifications_dropdown' %>
+      <a href="<%=user_path(current_user)%>" class="no-style" id="_home_profile">
+        <strong><%= current_user.username %></strong>
+        <span class="inliner icon icon-angle-right"></span>
+      </a>
+    <% else %>
+      <%= link_to t('user.user_login'), new_session_path, title: t('user.user_login'), id: '_home_singin' %>
+    <% end %>
 
 
       <!-- post -->

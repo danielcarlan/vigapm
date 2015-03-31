@@ -1,0 +1,8 @@
+#notifications
+  .dropdown
+    a#notifications-dropdown-link.dropdown-toggle data-toggle='dropdown'
+      span.user-avatar
+        = image_tag current_user.avatar.url, style: 'width: 30px'
+      span#notifications-badge.badge= current_user.unread_users_notifications.count
+    .notifications-menu
+      = render 'shared/notifications/menu'

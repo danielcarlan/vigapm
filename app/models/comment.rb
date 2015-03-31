@@ -27,6 +27,8 @@ class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :post
 
+  after_commit :notify_post_commented!, on: :create
+
   def comment_ranking
     self.get_upvotes.size - self.get_downvotes.size
   end
@@ -41,5 +43,11 @@ class Comment < ActiveRecord::Base
 
   def comment_total_votes
     self.get_upvotes.size + self.get_downvotes.size
+  end
+
+  protected
+
+  def notify_post_commented!
+    Notifications::Event.notify_post_commented!(post, user)
   end
 end

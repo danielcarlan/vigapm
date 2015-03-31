@@ -7,8 +7,7 @@ class CommentsController < ApplicationController
   def create
     @comment = @post.comments.build(comment_params)
     @comment.user = current_user
-
-    CommentMail.new_comment(@post, @comment).deliver if @comment.save
+    @comment.save
 
     respond_with [@post, @comment], location: post_path(@post)
   end

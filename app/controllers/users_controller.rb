@@ -56,6 +56,7 @@ class UsersController < ApplicationController
 
   def user_params
     user_params = params[:user]
-    user_params.permit(:email, :username, :password, :avatar, :city, :bio, :followed_id)
+    user_params.permit(:email, :username, :password, :avatar, :city, :bio, :followed_id,
+                       :notify_post_commented, :notify_post_edited, :notify_becoming_guru)
   end
 end

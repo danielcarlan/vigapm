@@ -11,19 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150321183535) do
+ActiveRecord::Schema.define(version: 20150324162830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "comment_hierarchies", id: false, force: true do |t|
-    t.integer "ancestor_id",   null: false
-    t.integer "descendant_id", null: false
-    t.integer "generations",   null: false
-  end
-
-  add_index "comment_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "comment_anc_desc_idx", unique: true, using: :btree
-  add_index "comment_hierarchies", ["descendant_id"], name: "comment_desc_idx", using: :btree
+  enable_extension "hstore"
 
   create_table "comment_hierarchies", id: false, force: true do |t|
     t.integer "ancestor_id",   null: false
@@ -71,10 +63,14 @@ ActiveRecord::Schema.define(version: 20150321183535) do
   end
 
   create_table "events", force: true do |t|
-    t.string   "name"
+    t.integer  "kind"
+    t.integer  "post_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "events", ["post_id"], name: "index_events_on_post_id", using: :btree
 
   create_table "impressions", force: true do |t|
     t.string   "impressionable_type"
@@ -100,6 +96,15 @@ ActiveRecord::Schema.define(version: 20150321183535) do
   add_index "impressions", ["impressionable_type", "impressionable_id", "session_hash"], name: "poly_session_index", using: :btree
   add_index "impressions", ["impressionable_type", "message", "impressionable_id"], name: "impressionable_type_message_index", using: :btree
   add_index "impressions", ["user_id"], name: "index_impressions_on_user_id", using: :btree
+
+  create_table "notifications", force: true do |t|
+    t.integer  "event_id"
+    t.string   "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "notifications", ["event_id"], name: "index_notifications_on_event_id", using: :btree
 
   create_table "post_pictures", force: true do |t|
     t.integer  "post_id"
@@ -210,7 +215,20 @@ ActiveRecord::Schema.define(version: 20150321183535) do
     t.string   "auth_token"
     t.string   "password_reset_token"
     t.datetime "password_reset_sent_at"
+    t.hstore   "notification_settings"
   end
+
+  create_table "users_notifications", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "notification_id"
+    t.boolean  "viewed",          default: false, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "users_notifications", ["notification_id"], name: "index_users_notifications_on_notification_id", using: :btree
+  add_index "users_notifications", ["user_id", "notification_id"], name: "index_users_notifications_on_user_id_and_notification_id", using: :btree
+  add_index "users_notifications", ["user_id"], name: "index_users_notifications_on_user_id", using: :btree
 
   create_table "votes", force: true do |t|
     t.integer  "votable_id"

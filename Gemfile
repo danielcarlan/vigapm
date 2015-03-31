@@ -44,3 +44,4 @@ gem 'flat-ui-rails'
 gem 'simple_captcha2', require: 'simple_captcha'
 gem 'slim'
 gem 'closure_tree'
+gem 'js-routes' # Path helpers in JS
