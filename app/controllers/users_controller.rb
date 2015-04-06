@@ -5,6 +5,8 @@ class UsersController < ApplicationController
   respond_to :html, only: :create
 
   def new
+    redirect_to root_path if current_user
+
     @user = User.new
   end
 

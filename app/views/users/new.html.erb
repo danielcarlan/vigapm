@@ -1,6 +1,6 @@
 <div class="container">
   <h2>Join Vigap!</h2>
-
+  <div id="results" style="text-align: center"></div>
   <div class="vigform">
     <%= form_for @user do |f| %>
         <div class="field" id="_signup_username">
@@ -30,6 +30,10 @@
         <div class="action">
           <%= f.submit 'Register', class: 'btn btn-info', id: '_signup_signin' %>
         </div>
-    <% end %>
+        <div class="text-center">or</span>
+        <div class="text-center">
+          <%= link_to "Sign in with Facebook", "/auth/facebook", id: 'facebook_sign_up' %>
+        </div>
+  <% end %>
   </div>
 </div>

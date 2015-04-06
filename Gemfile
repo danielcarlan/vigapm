@@ -8,6 +8,7 @@ group :development do
   gem 'byebug'
   gem 'faker'
   gem 'letter_opener'
+  gem 'dotenv-rails'
 end
 
 gem 'rails', '4.1.4'
@@ -45,3 +46,5 @@ gem 'simple_captcha2', require: 'simple_captcha'
 gem 'slim'
 gem 'closure_tree'
 gem 'js-routes' # Path helpers in JS
+gem 'omniauth-facebook', '~> 2.0.1'
+gem 'interactor-rails'

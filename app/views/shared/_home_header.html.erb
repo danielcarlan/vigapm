@@ -11,9 +11,9 @@
       </a>
     <% else %>
       <%= link_to t('user.user_login'), new_session_path, title: t('user.user_login'), id: '_home_singin' %>
+      <%= link_to "Sign in with Facebook", "/auth/facebook", id: "sign_in" %>
     <% end %>
-
-
+    
       <!-- post -->
       <% if current_user %>
             <%= link_to t('user.add_post'), new_post_path, class: 'action', title: t('user.add_post'), id: '_new_post' %>

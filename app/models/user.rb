@@ -43,6 +43,7 @@ class User < ActiveRecord::Base
   REGEX = /\A[^@\s]+@([^@.\s]+\.)+[^@.\s]+\z/
   validates :email, presence: true, uniqueness: true, format: { with: REGEX }
   validates :username, presence: true, uniqueness: true
+  has_many :identities
   has_many :posts, dependent: :destroy
   has_many :ruled_posts, class_name: 'Post', foreign_key: 'guru_id'
   has_many :comments, dependent: :destroy
@@ -66,11 +67,10 @@ class User < ActiveRecord::Base
   acts_as_voter
   has_attached_file :avatar,
                     :styles => {big: '300x300>', medium: '64x64>', thumb: '40x40>'},
-                    #:default_url => '/assets/missing-avatar.png'
-                    :default_url => lambda { |avatar| avatar.instance.set_default_url}
+                    :default_url => ->(avatar){ avatar.instance.set_default_url}
 
                         def set_default_url
-                                ActionController::Base.helpers.asset_path('missing-avatar.png')
+                          ActionController::Base.helpers.asset_path('missing-avatar.png')
                         end
   validates_attachment_content_type :avatar,
                                     :content_type => %w(image/jpg image/jpeg image/png image/gif)

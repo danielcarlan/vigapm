@@ -1,0 +1,41 @@
+h1 Lore!
+
+p
+  ' The Internet fairies loom over the newborn #{@user.username} with interest. That’s
+  strong> you
+  | and you’re now part of a limitless world of crowdsourced information named Vigap!
+
+div
+  p
+    ' I. The first fairy is a transgender, black, jewish old… guy. He gives you a quick tap on the head with 64 bytes of data and says:
+    span[style='color: #5DA130; font-style: italic']
+      ' "It seems you want to express yourself. Start typing your question or idea and share it with everyone to ignite the conversation. Be mindful to keep your status as Ruler!”
+  p
+    ' II. The second fairy is a strange Vladimir Putin look-alike but with distinct feminine features and clearly a woman. She says:
+    span[style='color: #3A75C4; font-style: italic']
+      ' “You will be a conqueror. I see it in the shape of your avatar icon file geometry. To rule, you will need 2 things: charisma and know-how. Get involved in a topic, improve it with your comments, bring it to a level that’s better than anything on Wikipedia, have its readers upvote you and, with enough support, you will become the Ruler, or new manager of that article!”
+  p
+    ' III. The third fairy is a quiet old crone. The kind you wouldn’t want as a mother in-law. She keeps finding issues with everything while looking at you intently.
+    span[style='color: #E02C1A; font-style: italic']
+      ' “Your avatar picture is missing. Your bio is too short. You haven’t done anything worthwhile since you were born”.
+    | Some of her complaints seem a bit exaggerated but they’re true nonetheless.
+
+div
+  | You just received 738 bytes of data:
+  p= link_to post_url(id: 'vigap-what-should-we-improve-and-what-is-missing'), post_url(id: 'vigap-what-should-we-improve-and-what-is-missing')
+
+div
+  p It’s where the old crone and everyone else submits their suggestions and complaints. You should go there and get your first points as a contributor to the world of Vigap.
+
+  p Tell us! Tell everyone! Learn!
+
+div
+  h4 TLDR
+  p  Your first question or opinion: #{link_to 'Click here', new_post_url}
+  p Search for stuff: #{link_to 'Click here', root_url}
+  p Contribute to improving Vigap: #{link_to 'Click here', root_url}
+  p About vigap: #{link_to 'Click here', post_url(id: 'about-vigap')}
+
+
+div
+  p You received this e-mail (and may get a few others in the future) because you created an account on Vigap. If you don’t want to get this type of e-mails from Vigap in the future, click [here] to unsubscribe. We don’t send stuff often and when we do we try to make sure it’s relevant and good quality so we suggest you keep us close. You should also check and configure your #{link_to 'notification settings', user_url(@user)}
