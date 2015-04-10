@@ -30,7 +30,7 @@ module Notifications
       # Post commented
       if event.post_commented?
         (post.users + [post.user] + [post.guru]).uniq.each do |user|
-          UsersNotification.create!(user: user, notification: self) #unless user == event.user
+          UsersNotification.create!(user: user, notification: self) unless user == event.user
         end
       end
     end

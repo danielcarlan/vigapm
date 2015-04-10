@@ -2,14 +2,14 @@
   .media.comment[style="opacity: #{comment_opacity(comment)};"]
     = link_to user_path(comment.user), class: ('pull-left'), id: '_posts_comment_profile', style: 'display: inline-block;'
       = image_tag comment.user.avatar.url(:medium), class:'img-circle', style:'height:64px;width:64px;'
-      = ranking_badge(comment.user)
+      = ranking_badge(comment.user, @post)
     .media-body
       = comment_posted_ago(comment)
       h4.media-heading
         strong
           =' link_to comment.user.username, user_path(comment.user) rescue "Anonymous"
         | says:
-      p=comment.body
+      p= comment.body
       h4
         - if current_user != comment.user
           - votetag = comment.user.username.gsub(/ /, "-") rescue "Vigap"

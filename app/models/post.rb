@@ -39,6 +39,7 @@ class Post < ActiveRecord::Base
 
   before_validation :generate_slug
   after_commit :notify_post_edited!, on: :update
+  before_create :set_creator_as_guru
 
   validates :slug, presence: true
   validates :title, presence: true, uniqueness: true
@@ -155,5 +156,9 @@ class Post < ActiveRecord::Base
 
   def notify_post_edited!
     Notifications::Event.notify_post_edited!(self)
+  end
+
+  def set_creator_as_guru
+    self.guru = user
   end
 end

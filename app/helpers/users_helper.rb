@@ -1,10 +1,10 @@
 module UsersHelper
-  def ranking_badge(user)
+  def ranking_badge(user, post)
     return content_tag(:span, class: "badge") unless user
 
     span_class = "badge #{user.username.parameterize}-rank"
-    span_class << 'alert-danger' if user.ranking < 0
+    span_class << ' alert-danger' if user.ranking_for(post) < 0
 
-    content_tag(:span, user.ranking, class: span_class)
+    content_tag(:span, user.ranking_for(post), class: span_class)
   end
 end
