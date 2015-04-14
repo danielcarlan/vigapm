@@ -15,12 +15,19 @@ class SignUpUserViaFacebook
   end
 
   def create_user
-    context.user = context.identity.build_user(
-      username: context.omniauth.info.first_name,
-      email: context.omniauth.info.email)
-    context.user.avatar = URI.parse(context.omniauth.info.image)
+    user = User.find_by(email: context.omniauth.info.email)
 
-    context.user.save(validate: false)
-    context.identity.save
+    if user
+      context.user = user
+    else
+      context.user = User.new(
+        username: context.omniauth.info.first_name,
+        email: context.omniauth.info.email,
+        password: ('0'..'z').to_a.shuffle[0,16].join)
+      context.user.avatar = URI.parse(context.omniauth.info.image)
+      context.user.save!
+    end
+
+    context.identity.update(user: context.user)
   end
 end

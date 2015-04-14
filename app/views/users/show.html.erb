@@ -1,38 +1,31 @@
 <div class="container">
+  <h1>
+    <div class="pull-left">
+      <%= image_tag @user.avatar.url(:thumb), class:'img-circle', style:'height:57px;width:57px;' %>
+    </div>
+    <%= @user.username %> <small>(<%= @user.posts.count %> posts)</small>
+  </h1>
 
-
-    <h1>
-      <div class="pull-left">
-        <%= image_tag @user.avatar.url(:thumb), class:'img-circle', style:'height:57px;width:57px;' %>
-      </div>
-      <%= @user.username %> <small>(<%= @user.posts.count %> posts)</small>
-    </h1>
-
-      <span class="post-stats icon icon-clock-o warn">
-        <span>Joined</span>:
-        <span><%= time_ago_in_words(@user.created_at) %> ago</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <span class="icon icon-arrow-right"></span> Following: <span class="badge Vigap-rank">
-               <%= @user.followed_users.count %>
-            </span>
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <span class="icon icon-arrow-left"></span> Followers: <span class="badge Vigap-rank">
-               <%= @user.followers.count %>
-            </span>
+  <span class="post-stats icon icon-clock-o warn">
+    <span>Joined</span>:
+    <span><%= time_ago_in_words(@user.created_at) %> ago</span>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <span class="icon icon-arrow-right"></span> Following: <span class="badge Vigap-rank">
+      <%= @user.followed_users.count %>
     </span>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <span class="icon icon-arrow-left"></span> Followers: <span class="badge Vigap-rank">
+      <%= @user.followers.count %>
+    </span>
+  </span>
 
-
-
-
-    <!--left col
-          <div id="follow_form">
-            <% if current_user.following?(@user) %>
-                <%= render 'unfollow' %>
-            <% else %>
-                <%= render 'follow' %>
-            <% end %>
-          </div>
-          -->
+  <div id="follow_form">
+    <% if current_user.following?(@user) %>
+        <%= render 'unfollow' %>
+    <% else %>
+        <%= render 'follow' %>
+    <% end %>
+  </div>
 
 
       <!--
@@ -46,78 +39,83 @@
 </div>
 
 <div class="page-white-full">
-<div class="container">
-      <ul class="nav nav-tabs" id="myTab">
-        <li class="active"><a href="#posts" data-toggle="tab">Created posts</a></li>
-        <li><a href="#ruled-posts" data-toggle="tab">Ruled posts</a></li>
-        <% if current_user.username == @user.username %>
-          <li><a href="#subs" data-toggle="tab">Followed posts</a></li>
-          <li><a href="#settings" data-toggle="tab" id="_profile_settings">Settings</a></li>
-          <li><a href="#notification-settings" data-toggle="tab" id="_profile_notifications">Notifications</a></li>
+  <div class="container">
+    <ul class="nav nav-tabs" id="myTab">
+      <li class="active">
+        <a href="#posts" data-toggle="tab">Created posts</a>
+      </li>
+      <li>
+        <a href="#ruled-posts" data-toggle="tab">Ruled posts</a>
+      </li>
+      <% if current_user.username == @user.username %>
+        <li><a href="#subs" data-toggle="tab">Followed posts</a></li>
+        <li><a href="#settings" data-toggle="tab" id="_profile_settings">Settings</a></li>
+        <li><a href="#notification-settings" data-toggle="tab" id="_profile_notifications">Notifications</a></li>
       <% end %>
-      </ul>
+    </ul>
 
-      <div class="tab-content">
+    <div class="tab-content">
+      <div class="tab-pane active" id="posts">
+        <div class="group-container-none">
+          <ul class="grouped-list-none">
+            <% @user.posts.order('created_at DESC').each do |post| %>
+              <li class="menu-item list-group-item">
+                <% if post.main_picture %>
+                  <div class="pic">
+                    <a href="<%= post_path(id: post.slug) %>">
+                      <img src="<%= post.main_picture.image.url %>" alt="Placeholder" width="260" height="150" />
+                    </a>
+                  </div>
+                <% end %>
 
-        <div class="tab-pane active" id="posts">
-
-          <div class="group-container-none">
-            <ul class="grouped-list-none">
-              <% @user.posts.order('created_at DESC').each do |post| %>
-                <li class="menu-item list-group-item">
-                  <% if post.main_picture %>
-                    <div class="pic">
-                      <a href="<%= post_path(id: post.slug) %>">
-                        <img src="<%= post.main_picture.image.url %>" alt="Placeholder" width="260" height="150" />
-                      </a>
-                    </div> <!-- .pic -->
-                  <% end %>
-
-                  <h4 class="list-group-item-heading">
-                    <small>
-                      <span class="next-av">
+                <h4 class="list-group-item-heading">
+                  <small>
+                    <span class="next-av">
                       <img class="img-circle" width="60" height="60" src="<%= @user.avatar.url(:thumb) rescue  asset_path('missing-avatar.png') %>">
                     </span>
-                      Added by: <a href="<%= user_path(@user) rescue "" %>" title="User"><%= @user.username rescue "Vigap" %></a></small>
-                    <a href="<%= post_path(id: post.slug) %>" title="<%= post.title %>"><%= post.title %></a>
-                  </h4>
+                    Added by: <a href="<%= user_path(@user) rescue "" %>" title="User"><%= @user.username rescue "Vigap" %></a>
+                  </small>
+                  <a href="<%= post_path(id: post.slug) %>" title="<%= post.title %>">
+                    <%= post.title %>
+                  </a>
+                </h4>
 
-                  <p>
-                    <%= truncate(strip_tags(post.body.html_safe), :length => 100, :omission => '... (continued)', :escape => false) %>
-                  </p>
+                <p>
+                  <%= truncate(strip_tags(post.body.html_safe), :length => 100, :omission => '... (continued)', :escape => false) %>
+                </p>
 
-                  <div class="card-footer">
-                    <!--Types of label: Default Primary Success Info Warning Danger-->
-                    <% if post.updated_at > Time.now - 1.days %>
-                              <span class="post-stats icon icon-clock-o warn">
-                    <% else %>
-                              <span class="post-stats icon icon-clock-o">
-                    <% end %>
-                    <span><%=time_ago_in_words(post.updated_at)%></span></span>
+                <div class="card-footer">
+                  <!--Types of label: Default Primary Success Info Warning Danger-->
+                  <% if post.updated_at > Time.now - 1.days %>
+                    <span class="post-stats icon icon-clock-o warn"></span>
+                  <% else %>
+                    <span class="post-stats icon icon-clock-o"></span>
+                  <% end %>
+                  <span><%=time_ago_in_words(post.updated_at)%></span>
 
-                    <% if post.cached_votes_up > 0 %>
-                              <span class="post-stats icon icon-thumbs-up">
-                                <span><%= post.cached_votes_up %></span>
-                              </span>
-                    <% end %>
+                  <% if post.cached_votes_up > 0 %>
+                    <span class="post-stats icon icon-thumbs-up">
+                      <span><%= post.cached_votes_up %></span>
+                    </span>
+                  <% end %>
 
-                    <% if post.cached_votes_down > 0 %>
-                              <span class="post-stats icon icon-thumbs-down">
-                                <span><%=post.cached_votes_down%></span>
-                              </span>
-                    <% end %>
+                  <% if post.cached_votes_down > 0 %>
+                    <span class="post-stats icon icon-thumbs-down">
+                      <span><%=post.cached_votes_down%></span>
+                    </span>
+                  <% end %>
 
-                    <% if post.comments %>
-                            <span class="post-stats icon icon-comment">
-                              <span><%=post.comments.length %></span>
-                            </span>
-                    <% end %>
-                  </div>
-                </li>
-              <% end %>
-            </ul>
-          </div>
-        </div><!--/tab-pane-->
+                  <% if post.comments %>
+                    <span class="post-stats icon icon-comment">
+                      <span><%=post.comments.length %></span>
+                    </span>
+                  <% end %>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
 
         <div class="tab-pane " id="ruled-posts">
           <div class="group-container-none">
@@ -180,7 +178,7 @@
 
 
         <% if current_user.username == @user.username %>
-            <div class="tab-pane active" id="subs">
+            <div class="tab-pane" id="subs">
               <div class="group-container-none">
                 <ul class="grouped-list-none">
                   <% @user.subscription_posts.each do |subscription_post| %>
